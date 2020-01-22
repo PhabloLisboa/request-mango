@@ -1,6 +1,3 @@
-
-
-
 export interface routeObject{
     method: string,
     path: string,    
