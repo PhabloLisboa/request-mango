@@ -25,17 +25,42 @@ export abstract  class Controller<D extends mongoose.Document>{
         .then( list => resp.json(list))
         .catch(next)   
     }
-
+    
+    show = (req: express.Request, resp: express.Response,  next) => {
+        this.model.findOne({_id: req.params.id})
+        .then(document =>  resp.json(document))
+        .catch(next)
+    }
+    
     update = (req: express.Request, resp: express.Response,  next) => {
+        //This is a PATCH
         const options = {runValidators: true, new : true}
         this.model.findOneAndUpdate(req.params.id, req.body, options)
         .then( document => resp.json(document))
         .catch(next)   
     }
 
-    replace(){}
+    replace = (req: express.Request, resp: express.Response,  next) => {
+        // This is a PUT
+        const options = {runValidators: true, overwrite: true}
+        this.model.update({_id: req.params.id}, req.body, options)
+        .then( document => {
+            if(document.n){
+                this.model.findById(req.params.id)
+                .then( response => resp.send(response))
+            }else{
+                resp.send(404)
+            }
+        })
+        .catch(next)
+    }
 
-    delete(){}
+    delete = (req: express.Request, resp: express.Response,  next) => {
+        this.model.findByIdAndDelete({_id: req.params.id})
+        .then( document => resp.json(document))
+        .catch(next)
+    }
+
 
 
 }

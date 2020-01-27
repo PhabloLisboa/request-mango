@@ -20,13 +20,32 @@ class GroupController extends Controller<Group>{
         callback:this.list
     }
 
+    showRoute:routeObject = {
+        method:'get',
+        path:'/groups/:id',
+        callback:this.show
+    }
+
     updateRoute:routeObject = {
-        method:'post',
+        method:'patch',
         path:'/groups/:id',
         callback:this.update
     }
 
-    router = [this.createRoute, this.listRoute, this.updateRoute]    
+    replaceRoute:routeObject = {
+        method:'put',
+        path:'/groups/:id',
+        callback:this.replace
+    }
+
+    deleteRoute:routeObject = {
+        method:'delete',
+        path:'/groups/:id',
+        callback:this.delete
+    }
+
+    router = [this.createRoute, this.listRoute, 
+                this.showRoute, this.updateRoute, this.replaceRoute ,this.deleteRoute]    
 }
 
 export const groupController = new GroupController()
