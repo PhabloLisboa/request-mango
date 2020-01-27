@@ -15,7 +15,7 @@ const groupSchema = new mongoose.Schema({
     },
     site: {
         type: String,
-        required: true,
+        required: false,
         maxlength: 128
     },
     description: {

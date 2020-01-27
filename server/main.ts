@@ -2,6 +2,7 @@ import * as express from 'express'
 import { routeObject } from '../routes/router'
 import { environment } from '../common/environment'
 import * as mongoose from 'mongoose'
+import * as bodyParser from 'body-parser'
 
 export class Server{
     
@@ -19,7 +20,8 @@ export class Server{
             try{
                 routeObjects.forEach(route => {
                     app[route.method](route.path, route.callback)
-                })                 
+                })               
+                
                 app.listen(environment.server.port, () => resolve(app))                
             }
             catch(e){
@@ -30,7 +32,10 @@ export class Server{
     
 
     bootstrap(...routeObjects: routeObject[]): Promise<express.Application>{       
+        
         this.app = express()
+        this.app.use(bodyParser.json())  
+
         return this.initializeDB()
         .then(() => this.initRoutes(this.app, routeObjects)) 
     }

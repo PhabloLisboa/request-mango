@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const environment_1 = require("../common/environment");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 class Server {
     initializeDB() {
         return mongoose.connect(environment_1.environment.database.url, {
@@ -25,6 +26,7 @@ class Server {
     }
     bootstrap(...routeObjects) {
         this.app = express();
+        this.app.use(bodyParser.json());
         return this.initializeDB()
             .then(() => this.initRoutes(this.app, routeObjects));
     }

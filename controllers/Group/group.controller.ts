@@ -7,14 +7,26 @@ class GroupController extends Controller<Group>{
     constructor(){
         super(Group)
     }
+
+    createRoute:routeObject = {
+        method:'post',
+        path:'/groups',
+        callback:this.create
+    }
     
-    teste:routeObject = {
+    listRoute:routeObject = {
         method:'get',
         path:'/groups',
         callback:this.list
     }
 
-    router = [this.teste]    
+    updateRoute:routeObject = {
+        method:'post',
+        path:'/groups/:id',
+        callback:this.update
+    }
+
+    router = [this.createRoute, this.listRoute, this.updateRoute]    
 }
 
 export const groupController = new GroupController()

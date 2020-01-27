@@ -20,15 +20,18 @@ export abstract  class Controller<D extends mongoose.Document>{
         .catch(next)
     }
 
-    list = (req: express.Request, resp: express.Response,  next) => {
-        
+    list = (req: express.Request, resp: express.Response,  next) => {        
         this.model.find()
         .then( list => resp.json(list))
-        .catch(next)  
-        console.log(this.model)     
+        .catch(next)   
     }
 
-    update(){}
+    update = (req: express.Request, resp: express.Response,  next) => {
+        const options = {runValidators: true, new : true}
+        this.model.findOneAndUpdate(req.params.id, req.body, options)
+        .then( document => resp.json(document))
+        .catch(next)   
+    }
 
     replace(){}
 

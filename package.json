@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/body-parser": "^1.17.1",
     "@types/mongoose": "^5.5.42",
     "@types/typescript": "^2.0.0",
+    "body-parser": "^1.19.0",
     "typescript": "^3.7.5"
   },
   "dependencies": {
