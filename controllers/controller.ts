@@ -2,6 +2,7 @@
 import * as express from 'express'
 import * as mongoose from 'mongoose';
 import { routeObject } from '../routes/router'
+import * as bcrypt from 'bcrypt'
 
 export abstract  class Controller<D extends mongoose.Document>{
     
@@ -11,12 +12,16 @@ export abstract  class Controller<D extends mongoose.Document>{
         this.model = refModel
     }
 
-    
-
     create = (req: express.Request, resp: express.Response,  next) => {
-        let document = new this.model(req.body)
+        let document:any = new this.model(req.body)
+        
+        if(document.password)
+           document.password = bcrypt.hashSync(document.password, 5)
+        
         document.save()
-        .then( createdDocument => resp.json(createdDocument))
+        .then( createdDocument => {
+            document.password = undefined //Don't show when returned
+            return resp.json(createdDocument)})
         .catch(next)
     }
 
@@ -57,7 +62,9 @@ export abstract  class Controller<D extends mongoose.Document>{
 
     delete = (req: express.Request, resp: express.Response,  next) => {
         this.model.findByIdAndDelete({_id: req.params.id})
-        .then( document => resp.json(document))
+        .then( document => {
+            (<any>document).password = undefined
+            resp.json(document)})
         .catch(next)
     }
 

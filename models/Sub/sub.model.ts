@@ -9,7 +9,8 @@ export interface Sub extends mongoose.Document{
     maker: String,
     recomendedRaw: String,
     isPack: boolean,
-    group: Group
+    group: Group,
+    link: String
 }
 
 const subSchema = new mongoose.Schema({
@@ -30,7 +31,6 @@ const subSchema = new mongoose.Schema({
     },
     episode: {
         type: Number,
-        required: true
     },
     maker: {
         type: String,
@@ -48,6 +48,10 @@ const subSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Group',
         required: false
+    },
+    link:{
+        type: String,
+        required: true
     }
 })
 

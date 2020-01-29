@@ -45,7 +45,7 @@ class GroupController extends Controller<Group>{
     }
 
     router = [this.createRoute, this.listRoute, 
-                this.showRoute, this.updateRoute, this.replaceRoute ,this.deleteRoute]    
+              this.showRoute, this.updateRoute, this.replaceRoute ,this.deleteRoute]    
 }
 
 export const groupController = new GroupController()
