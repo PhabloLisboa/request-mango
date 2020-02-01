@@ -1,11 +1,12 @@
 import * as mongoose from  'mongoose'
-
+import * as bcrypt from 'bcrypt'
 
 export interface Group extends mongoose.Document{
     name: String,
     password: String,
     site: String,
-    description: String
+    description: String,
+    match(password): boolean
 }
 
 const groupSchema = new mongoose.Schema({
@@ -30,5 +31,10 @@ const groupSchema = new mongoose.Schema({
     }
     
 })
+
+
+groupSchema.methods.match = function(password: string): boolean {
+    return bcrypt.compareSync(password, this.password)
+}
 
 export const Group = mongoose.model<Group>('Group', groupSchema)

@@ -4,6 +4,7 @@ const express = require("express");
 const environment_1 = require("../common/environment");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const token_1 = require("../middlewares/token");
 class Server {
     initializeDB() {
         return mongoose.connect(environment_1.environment.database.url, {
@@ -27,6 +28,7 @@ class Server {
     bootstrap(...routeObjects) {
         this.app = express();
         this.app.use(bodyParser.json());
+        this.app.use(token_1.tokenApply);
         return this.initializeDB()
             .then(() => this.initRoutes(this.app, routeObjects));
     }

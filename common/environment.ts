@@ -4,5 +4,8 @@ export const environment = {
     },
     database:{
         url: process.env.DB_URL || 'mongodb://127.0.0.1/request-mango',
+    },
+    security:{
+        pass:'esta é uma senha legal!'
     }
 }

@@ -1,6 +1,8 @@
 import { Server }  from './server/main'
 import { groupController} from './controllers/Group/group.controller'
 import { subController } from './controllers/Sub/sub.controller'
+import { routeObject , auth} from './routes/router'
+
 
 declare global {
     namespace Express {
@@ -16,7 +18,6 @@ declare global {
 }
 
 
-
 const server:Server = new Server()
 
-server.bootstrap(...groupController.router, ...subController.router).then( app =>  console.log(`Server Is running`))
+server.bootstrap(...groupController.router, ...subController.router, auth).then( app =>  console.log(`Server Is running`))

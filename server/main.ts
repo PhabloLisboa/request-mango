@@ -3,6 +3,8 @@ import { routeObject } from '../routes/router'
 import { environment } from '../common/environment'
 import * as mongoose from 'mongoose'
 import * as bodyParser from 'body-parser'
+import { tokenApply } from '../middlewares/token'
+
 
 export class Server{
     
@@ -34,7 +36,9 @@ export class Server{
     bootstrap(...routeObjects: routeObject[]): Promise<express.Application>{       
         
         this.app = express()
+
         this.app.use(bodyParser.json())  
+        this.app.use(tokenApply)  
 
         return this.initializeDB()
         .then(() => this.initRoutes(this.app, routeObjects)) 
