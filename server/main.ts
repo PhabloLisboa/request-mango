@@ -21,7 +21,11 @@ export class Server{
         return new Promise((resolve, reject) => {
             try{
                 routeObjects.forEach(route => {
-                    app[route.method](route.path, route.callback)
+                    if(route.midlleware){
+                        app[route.method](route.path, route.midlleware,route.callback)
+                    }else{
+                        app[route.method](route.path, route.callback)
+                    }
                 })               
                 
                 app.listen(environment.server.port, () => resolve(app))                

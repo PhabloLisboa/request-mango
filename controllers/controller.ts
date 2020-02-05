@@ -40,7 +40,7 @@ export abstract  class Controller<D extends mongoose.Document>{
     update = (req: express.Request, resp: express.Response,  next) => {
         //This is a PATCH
         const options = {runValidators: true, new : true}
-        this.model.findOneAndUpdate(req.params.id, req.body, options)
+        this.model.findOneAndUpdate({_id: req.params.id}, req.body, options)
         .then( document => resp.json(document))
         .catch(next)   
     }

@@ -14,8 +14,6 @@ export const tokenApply: RequestHandler = (req, resp, next) => {
     
 }
 
-
-
 const extract = (req: Request) => {
     let token = undefined
     const authorization = req.header('authorization')
@@ -31,9 +29,9 @@ const extract = (req: Request) => {
 function userApply (req: Request, next): (error, decoded) => void {
     return (error, decoded) =>{
         if(decoded){
-            Group.findOne({name: decoded.sub }).then(user =>{
-                if(user){
-                    (<any>req).authenticated = user
+            Group.findOne({name: decoded.sub }).then(group =>{
+                if(group){
+                    (<any>req).authenticated = group
                     
                 }
                 next()

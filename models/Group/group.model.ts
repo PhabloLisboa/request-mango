@@ -7,6 +7,7 @@ export interface Group extends mongoose.Document{
     site: String,
     description: String,
     match(password): boolean
+    hasAnyProfile(...profiles: string[]): boolean
 }
 
 const groupSchema = new mongoose.Schema({
@@ -28,6 +29,10 @@ const groupSchema = new mongoose.Schema({
         type: String,
         required: true,
         select: false
+    },
+    role:{
+        type: String,
+        enum: ['admin','group']
     }
     
 })
@@ -35,6 +40,10 @@ const groupSchema = new mongoose.Schema({
 
 groupSchema.methods.match = function(password: string): boolean {
     return bcrypt.compareSync(password, this.password)
+}
+
+groupSchema.methods.hasAnyProfile = function(...profiles: string[]): boolean {
+    return profiles.some(profile => this.role.indexOf(profile) != -1 )
 }
 
 export const Group = mongoose.model<Group>('Group', groupSchema)

@@ -1,6 +1,7 @@
 import { Controller } from "../controller";
 import { Group } from "../../models/Group/group.model"
 import { routeObject } from '../../routes/router'
+import { authorization } from "../auth/authorization.controller";
 
 class GroupController extends Controller<Group>{
 
@@ -17,6 +18,7 @@ class GroupController extends Controller<Group>{
     listRoute:routeObject = {
         method:'get',
         path:'/groups',
+        midlleware: authorization('group'),
         callback:this.list
     }
 
